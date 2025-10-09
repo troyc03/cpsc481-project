@@ -1,1 +1,1 @@
-# iscovering Chaotic Dynamics: An AI-Assisted Sparse Identification of the Lorenz System using Machine Learning
+# Discovering Chaotic Dynamics: An AI-Assisted Sparse Identification of the Lorenz System using Machine Learning
