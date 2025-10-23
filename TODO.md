@@ -1,0 +1,3 @@
+- [x] Add pysindy to requirements.txt
+- [x] Fix the code in lorenz_attractor.py (correct odeint call, init_state shape, add t array, update PySINDy fit/simulate)
+- [x] Run the script to test the animation
