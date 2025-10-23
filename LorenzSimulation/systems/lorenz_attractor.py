@@ -4,7 +4,10 @@ import numpy as np
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Define Lorenz System
+# =============================
+# Lorenz System Definitions
+# =============================
+
 def lorenz(state, *, s=10, r=28, b=2.667):
     """Compute the Lorenz system derivatives."""
     x, y, z = state
@@ -13,7 +16,10 @@ def lorenz(state, *, s=10, r=28, b=2.667):
     dz = x * y - b * z
     return np.array([dx, dy, dz])
 
-# Using Runge-Kutta Integration
+# =============================
+# Runge-Kutta 4 Integration
+# =============================
+
 def rk4(func, initial_state, dt=0.01, steps=10000, **kwargs):
     """Fourth-order Runge-Kutta integration."""
     states = np.empty((steps + 1, len(initial_state)))
@@ -26,7 +32,10 @@ def rk4(func, initial_state, dt=0.01, steps=10000, **kwargs):
         states[i + 1] = states[i] + (dt / 6) * (k1 + 2*k2 + 2*k3 + k4)
     return states
 
-# Launch GUI
+# =============================
+# GUI with Animation
+# =============================
+
 def launch_gui():
     """Launch a Tkinter GUI with Lorenz attractor animation."""
     root = tk.Tk()
@@ -111,6 +120,9 @@ def launch_gui():
 
     root.mainloop()
 
+# =============================
 # Main Execution
+# =============================
+
 if __name__ == "__main__":
     launch_gui()
