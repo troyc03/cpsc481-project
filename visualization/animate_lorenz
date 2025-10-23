@@ -1,0 +1,28 @@
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import numpy as np
+
+def animate_trajectory(xyzs, title="Lorenz Attractor", interval=10):
+    fig = plt.figure()
+    ax = fig.add_subplot(projection='3d')
+    ax.plot(*xyzs.T, lw=0.5, color='blue', alpha=0.6)
+
+    (point,) = ax.plot([xyzs[0, 0]], [xyzs[0, 1]], [xyzs[0, 2]],
+                       marker='o', color='red', markersize=5)
+
+    ax.set_xlabel("X Axis")
+    ax.set_ylabel("Y Axis")
+    ax.set_zlabel("Z Axis")
+    ax.set_title(title)
+
+    ax.set_xlim(np.min(xyzs[:, 0]), np.max(xyzs[:, 0]))
+    ax.set_ylim(np.min(xyzs[:, 1]), np.max(xyzs[:, 1]))
+    ax.set_zlim(np.min(xyzs[:, 2]), np.max(xyzs[:, 2]))
+
+    def update(i):
+        point.set_data([xyzs[i, 0]], [xyzs[i, 1]])
+        point.set_3d_properties(xyzs[i, 2])
+        return (point,)
+
+    ani = FuncAnimation(fig, update, frames=len(xyzs), interval=interval, blit=True)
+    plt.show()
