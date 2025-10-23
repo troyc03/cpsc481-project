@@ -1,14 +1,10 @@
 import pysindy as ps
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-import derivative as dxdt
-import tkinter as tk
-from sklearn.linear_model import Lasso, ridge_regression
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from matplotlib.animation import FuncAnimation
+
 
 # Build Lorenz Attractor equations with parameters
 def lorenz(xyz, *, s=10, r=28, b=2.667):
