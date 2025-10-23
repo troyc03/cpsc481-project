@@ -3,25 +3,45 @@ from matplotlib.animation import FuncAnimation
 import numpy as np
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import pysindy as ps
 
-# =============================
-# Lorenz System Definitions
-# =============================
-
+# --- Lorenz System ---
 def lorenz(state, *, s=10, r=28, b=2.667):
-    """Compute the Lorenz system derivatives."""
     x, y, z = state
     dx = s * (y - x)
     dy = r * x - y - x * z
     dz = x * y - b * z
     return np.array([dx, dy, dz])
 
-# =============================
-# Runge-Kutta 4 Integration
-# =============================
+def run_sindy(data, dt=0.01, display_in_gui=None):
 
+    # Create SINDy model with polynomial library (degree 3)
+    model = ps.SINDy(
+        feature_library=ps.PolynomialLibrary(degree=3),
+        optimizer=ps.STLSQ(threshold=0.1),
+        differentiation_method=ps.FiniteDifference()
+    )
+
+    # Fit the model
+    model.fit(data, t=dt)
+    
+    # Print equations to console
+    print("Discovered SINDy equations:")
+    model.print()
+
+    # If a Tkinter Text widget is provided, display equations there
+    if display_in_gui is not None:
+        display_in_gui.delete(1.0, tk.END)
+        display_in_gui.insert(tk.END, str(model))
+
+    return model
+
+def predict_sindy(model, initial_state, steps=1000, dt=0.01):
+    t = np.linspace(0, steps * dt, steps)
+    return model.simulate(initial_state, t)
+
+# --- Runge-Kutta 4 Integration ---
 def rk4(func, initial_state, dt=0.01, steps=10000, **kwargs):
-    """Fourth-order Runge-Kutta integration."""
     states = np.empty((steps + 1, len(initial_state)))
     states[0] = initial_state
     for i in range(steps):
@@ -32,14 +52,10 @@ def rk4(func, initial_state, dt=0.01, steps=10000, **kwargs):
         states[i + 1] = states[i] + (dt / 6) * (k1 + 2*k2 + 2*k3 + k4)
     return states
 
-# =============================
-# GUI with Animation
-# =============================
-
+# --- GUI with Animation and SINDy ---
 def launch_gui():
-    """Launch a Tkinter GUI with Lorenz attractor animation."""
     root = tk.Tk()
-    root.title("Lorenz Attractor Simulation")
+    root.title("Lorenz Attractor + SINDy Simulation")
 
     # --- Figure Setup ---
     fig = plt.Figure(figsize=(6, 6))
@@ -61,9 +77,12 @@ def launch_gui():
     entry_y = labeled_entry("Initial Y:", 1, "1.0")
     entry_z = labeled_entry("Initial Z:", 2, "1.05")
 
+    # --- Text box for SINDy equations ---
+    text_eq = tk.Text(root, height=6, width=50)
+    text_eq.grid(row=6, column=0, columnspan=2, pady=5)
+
     # --- Animation Function ---
     def run_sim():
-        """Run and animate Lorenz trajectory."""
         # Get initial conditions
         q0 = np.array([
             float(entry_x.get()),
@@ -109,9 +128,10 @@ def launch_gui():
 
         # Create animation
         ani = FuncAnimation(fig, update, frames=steps, interval=10, blit=True)
-
-        # Draw the animation frame in Tkinter
         canvas.draw()
+
+        # --- Run SINDy on trajectory ---
+        run_sindy(data, dt=dt, display_in_gui=text_eq)
 
     # --- Run Button ---
     tk.Button(root, text="Run Simulation", command=run_sim).grid(
@@ -120,9 +140,6 @@ def launch_gui():
 
     root.mainloop()
 
-# =============================
-# Main Execution
-# =============================
 
 if __name__ == "__main__":
     launch_gui()
