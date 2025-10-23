@@ -1,3 +1,5 @@
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import pysindy as ps
 import numpy as np
 from scipy.integrate import odeint
@@ -33,6 +35,11 @@ model.print()
 # --- Simulate SINDy reconstruction ---
 x_sim = model.simulate(init_state, t)
 
+# Build GUI
+root = tk.Tk()
+root.title('Lorenz Attractor with Particle')
+root.geometry('800x600')
+
 # --- Plot Lorenz attractor ---
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
@@ -55,6 +62,9 @@ ax.legend()
 ax.set_xlim(np.min(xyzs[:, 0]), np.max(xyzs[:, 0]))
 ax.set_ylim(np.min(xyzs[:, 1]), np.max(xyzs[:, 1]))
 ax.set_zlim(np.min(xyzs[:, 2]), np.max(xyzs[:, 2]))
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas_widget = canvas.get_tk_widget()
+canvas_widget.pack(fill=tk.BOTH, expand=True)
 
 # --- Animation update function ---
 def update(i):
@@ -64,3 +74,5 @@ def update(i):
 
 ani = FuncAnimation(fig, update, frames=len(t), interval=10, blit=True)
 plt.show()
+canvas.draw()
+root.mainloop()
