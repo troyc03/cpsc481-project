@@ -16,6 +16,14 @@ def lorenz(state, t, s=10, r=28, b=2.667):
     z_dot = x * y - b * z
     return [x_dot, y_dot, z_dot]
 
+# --- Jacobian ---
+def jacobian(q, s=10.0, r=28.0, b=8.0/3.0):
+    x, y, z = q
+    return np.array([
+        [-s,      s,   0],
+        [r - z,  -1,  -x],
+        [y,       x,  -b]
+    ])
 
 class LorenzApp:
     def __init__(self, master):
