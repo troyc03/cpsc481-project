@@ -96,7 +96,9 @@ if __name__ == "__main__":
         'trained_z': trained_traj[:, 2]
     })
     df.to_csv('lorenz_evaluation_results.csv', index=False)
+    print("\n", df.head(10))
     print("Results saved to lorenz_evaluation_results.csv")
+    
 
 
 
