@@ -65,6 +65,10 @@ plt.grid(True, which='both', ls='--')
 plt.tight_layout()
 plt.show()
 
-print("Final position:", q1[-1], " m") 
-print("Velocity magnitude:", np.linalg.norm(v1[-1]), " ms^-1") 
-print("Acceleration magnitude:", np.linalg.norm(a1[-1]), " ms^-2")
+delta_position = q2[-1]-q1[-1]
+delta_velocity = v2[-1]-v1[-1]
+delta_acceleration = a2[-1]-a1[-1]
+
+print("Final position:", np.linalg.norm(delta_position), " m") 
+print("Velocity magnitude:", np.linalg.norm(delta_velocity), " ms^-1") 
+print("Acceleration magnitude:", np.linalg.norm(delta_acceleration), " ms^-2")
