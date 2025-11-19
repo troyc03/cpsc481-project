@@ -99,12 +99,10 @@ def preprocess_csv(file_path, seq_len=10, test_fraction=0.2):
 def plot_trajectories(true_traj, trained_traj, t, title_prefix=""):
     """
     Plot 3D true vs trained trajectories and RMSE over time.
-    true_traj, trained_traj: arrays (T,3)
-    t: times (T,)
+    Now includes least-squares line fitting through the cumulative RMSE curve.
     """
     fig = plt.figure(figsize=(12, 5))
 
-    # 3D plot
     ax1 = fig.add_subplot(121, projection='3d')
     ax1.plot(true_traj[:,0], true_traj[:,1], true_traj[:,2], label='True Lorenz', alpha=0.7)
     ax1.plot(trained_traj[:,0], trained_traj[:,1], trained_traj[:,2], label='Trained (SINDy)', alpha=0.7)
@@ -112,12 +110,32 @@ def plot_trajectories(true_traj, trained_traj, t, title_prefix=""):
     ax1.set_title(f'{title_prefix} Trajectories')
     ax1.legend()
 
-    # RMSE over time (cumulative RMSE up to time i)
-    rmse_vals = [rmse_from_array(true_traj[:i+1], trained_traj[:i+1]) for i in range(len(t))]
+    cumulative_rmse = np.array([
+        rmse_from_array(true_traj[:i+1], trained_traj[:i+1])
+        for i in range(len(t))
+    ])
+
     ax2 = fig.add_subplot(122)
-    ax2.plot(t, rmse_vals)
-    ax2.set_xlabel('Time'); ax2.set_ylabel('RMSE'); ax2.set_title(f'{title_prefix} Cumulative RMSE')
+    ax2.plot(t, cumulative_rmse, label='Cumulative RMSE')
+
+    # ---------- Least squares line ----------
+    coef = np.polyfit(t, cumulative_rmse, 1)   # slope, intercept
+    slope, intercept = coef
+    trendline = slope * t + intercept
+
+    ax2.plot(t, trendline, '--', label='Least-Squares Fit')
+
+    # Compute R^2
+    ss_res = np.sum((cumulative_rmse - trendline)**2)
+    ss_tot = np.sum((cumulative_rmse - np.mean(cumulative_rmse))**2)
+    r2 = 1 - ss_res / ss_tot
+
+    ax2.set_xlabel('Time')
+    ax2.set_ylabel('RMSE')
+    ax2.set_title(f'{title_prefix} Cumulative RMSE\n'
+                  f'Fit: slope={slope:.4f}, intercept={intercept:.4f}, $r^2$={r2:.4f}')
     ax2.grid(True)
+    ax2.legend()
 
     plt.tight_layout()
     plt.show()
@@ -170,6 +188,7 @@ def main():
         'sindy_y': x_sim[:,1],
         'sindy_z': x_sim[:,2]
     })
+    print(results_df.head(10))
     csv_path = "lorenz_evaluation_results.csv"
     results_df.to_csv(csv_path, index=False)
     print(f"Saved SINDy evaluation results to {csv_path}")
