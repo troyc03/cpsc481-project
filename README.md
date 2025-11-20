@@ -38,7 +38,8 @@ python -m evaluate
 4. Linear Regression
 5. Root Mean Squared Error
 
-### **Libraries**: The Lorenz attractor equations cannot be solved analytically - in order to solve them numerically, this project will be using the following:
+### **Libraries**: 
+The Lorenz attractor equations cannot be solved analytically - in order to solve them numerically, this project will be using the following:
 - NumPy for numerical computing
 - SciPy for solving differential equations numerically
 - Matplotlib for graphing the Lorenz attractor/visualization
