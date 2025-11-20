@@ -1,6 +1,7 @@
 # Discovering Chaotic Dynamics with Mathematical Physics: An AI-Assisted Analysis of the Lorenz System using Machine Learning
 
-### **Description**: This project applies artificial intelligence methods to discover and model chaotic systems. Using the Sparse Identification of Nonlinear Dynamics (SINDy) algorithm, we train a model to learn the governing equations of the Lorenz attractor directly from simulated data. This approach embodies a key idea in AI — learning structure from data — while emphasizing interpretability and scientific reasoning. The project combines applied mathematics, machine learning, and data visualization through an interactive GUI that allows users to generate Lorenz system data, apply SINDy-based model discovery, and visualize the reconstructed trajectories and learned equations. This project highlights interpretable AI applied to nonlinear systems and demonstrates how sparse regression techniques can uncover governing dynamics from observed data.
+### **Description**: 
+This project applies artificial intelligence methods to discover and model chaotic systems. Using the Sparse Identification of Nonlinear Dynamics (SINDy) algorithm, we train a model to learn the governing equations of the Lorenz attractor directly from simulated data. This approach embodies a key idea in AI — learning structure from data — while emphasizing interpretability and scientific reasoning. The project combines applied mathematics, machine learning, and data visualization through an interactive GUI that allows users to generate Lorenz system data, apply SINDy-based model discovery, and visualize the reconstructed trajectories and learned equations. This project highlights interpretable AI applied to nonlinear systems and demonstrates how sparse regression techniques can uncover governing dynamics from observed data.
 
 ### **Group Members**: Troy Chin
 
@@ -16,7 +17,7 @@ pip install numpy matplotlib scipy scikit-learn pysindy pandas
 **Option 2**: For non-VSCode users, install the Spyder IDE as each of these libraries come pre-installed. You may still have to install PySINDy and ScikitLearn manually.
 [Spyder IDE/]([url](https://www.spyder-ide.org/)) 
 
-### ***Running the Application**:
+### **Running the Application**:
 To run the main simulation, enter the following prompt:
 
 ```
