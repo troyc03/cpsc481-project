@@ -48,7 +48,8 @@ The Lorenz attractor equations cannot be solved analytically - in order to solve
 - Scikit-Learn for Evaluation and Analysis
 - PySINDy for deriving and solving nonlinear dynamical systems
 
-### **Timeline**: This project will be split into three phases:
+### **Timeline**: 
+This project will be split into three phases:
 - Phase I: Background Research (Week 1 - 2)- Intensive research on Sparse Identification of Nonlinear Dynamics theory and nonlinear dynamics; generation and implementation of Lorenz attractor data.
 - Phase II: Mathematical Modeling/Foundations (Week 4 - 6) - Derive the governing equations of the Lorenz attractor for computational implementation; all derivations will employ the following concepts - ordinary differential equations, nonlinear dynamical systems and chaos theory. 
 - Phase III: Computational Implementation (Week 7 - 8) - Prepare for computational implementation of the Lorenz equations into Python (and MATLAB). This part of the project is a culmination of phases 1 and 2. Once everything is finished, a report will be written in LaTeX to simulate and describe the dynamics of the Lorenz attractor.
