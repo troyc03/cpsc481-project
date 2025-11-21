@@ -15,7 +15,8 @@ Windows is the recommended OS for running this program, as well as the latest Py
 pip install numpy matplotlib scipy scikit-learn pysindy pandas
 ```
 **Option 2**: For non-VSCode users, install the Spyder IDE as each of these libraries come pre-installed. You may still have to install PySINDy and ScikitLearn manually.
-[https://www.spyder-ide.org/
+
+Spyder IDE: https://www.spyder-ide.org/
 
 ### **Running the Application**:
 To run the main simulation, enter the following prompt:
